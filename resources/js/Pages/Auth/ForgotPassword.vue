@@ -1,10 +1,9 @@
 <script setup>
 import BreezeButton from '@/Components/Button.vue';
-import BreezeGuestLayout from '@/Layouts/Guest.vue';
 import BreezeInput from '@/Components/Input.vue';
 import BreezeLabel from '@/Components/Label.vue';
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
-import { Head, useForm } from '@inertiajs/inertia-vue3';
+import {useForm} from '@inertiajs/inertia-vue3';
 
 defineProps({
     status: String,
@@ -20,30 +19,32 @@ const submit = () => {
 </script>
 
 <template>
-    <BreezeGuestLayout>
-        <Head title="Forgot Password" />
-
-        <div class="mb-4 text-sm text-gray-600">
-            Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.
-        </div>
-
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-            {{ status }}
-        </div>
-
-        <BreezeValidationErrors class="mb-4" />
-
-        <form @submit.prevent="submit">
-            <div>
-                <BreezeLabel for="email" value="Email" />
-                <BreezeInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus autocomplete="username" />
+    <div class="flex flex-col items-center mt-3 md:mt-32">
+        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+            <div class="mb-4 text-sm text-gray-600">
+                Forgot your password? No problem. Just let us know your email address and we will email you a password
+                reset link that will allow you to choose a new one.
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <BreezeButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Email Password Reset Link
-                </BreezeButton>
+            <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+                {{ status }}
             </div>
-        </form>
-    </BreezeGuestLayout>
+
+            <BreezeValidationErrors class="mb-4"/>
+
+            <form @submit.prevent="submit">
+                <div>
+                    <BreezeLabel for="email" value="Email"/>
+                    <BreezeInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required
+                                 autofocus autocomplete="username"/>
+                </div>
+
+                <div class="flex items-center justify-end mt-4">
+                    <BreezeButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                        Email Password Reset Link
+                    </BreezeButton>
+                </div>
+            </form>
+        </div>
+    </div>
 </template>
