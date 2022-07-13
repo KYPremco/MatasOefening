@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @mixin Builder
+ * @property int $id
  * @property string $name
  * @property string $image
  * @property float $price
@@ -24,6 +25,7 @@ class Assembly extends Model
         'name',
         'image',
         'price',
+        'manufacturer_id'
     ];
 
     public function users(): BelongsToMany
@@ -38,6 +40,6 @@ class Assembly extends Model
 
     public function components(): BelongsToMany
     {
-        return $this->belongsToMany(Component::class)->withPivot("location");
+        return $this->belongsToMany(Component::class, "assembly_components")->withPivot("location");
     }
 }

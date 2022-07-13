@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AssemblyController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -27,5 +28,17 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+
+Route::resource("assemblies", AssemblyController::class, [
+    "except" => ["index", "show"],
+    "middleware" => ["auth.admin", "auth", "verified"],
+]);
+Route::get("assemblies", [AssemblyController::class, "index"])->name("assemblies.index");
+Route::get("assemblies/{assembly}",  [AssemblyController::class, "show"])->middleware(["auth", "verified"])->name("assemblies.show");
+
+
+
 
 require __DIR__.'/auth.php';
