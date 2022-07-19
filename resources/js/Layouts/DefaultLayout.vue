@@ -60,7 +60,6 @@
 
         <DisclosurePanel class="sm:hidden">
             <div class="px-2 pt-2 pb-3 space-y-1">
-
                 <DisclosureButton v-for="item in navigation" :key="item.name" as="a" :href="item.href" :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'block px-3 py-2 rounded-md text-base font-medium']" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</DisclosureButton>
             </div>
         </DisclosurePanel>
@@ -76,7 +75,9 @@ import BreezeDropdown from '@/Components/Dropdown.vue';
 import BreezeDropdownLink from '@/Components/DropdownLink.vue';
 
 const navigation = [
-    { name: 'Assemblages', href: '/assemblies', current: true },]
+    { name: 'Assemblages', href: '/assemblies', current: true },
+    { name: 'Components', href: '/components', current: true },
+]
 </script>
 <style>
     body {

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Assembly\CreateAssemblyRequest;
-use App\Http\Requests\Assembly\UpdateAssemblyRequest;
+use App\Http\Requests\Component\CreateComponentRequest;
+use App\Http\Requests\Component\UpdateComponentRequest;
 use App\Http\Resources\AssemblyResource;
 use App\Models\Assembly;
 use App\Models\Manufacturer;
@@ -41,10 +41,10 @@ class AssemblyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  CreateAssemblyRequest  $createAssemblyRequest
+     * @param  CreateComponentRequest  $createAssemblyRequest
      * @return RedirectResponse
      */
-    public function store(CreateAssemblyRequest $createAssemblyRequest)
+    public function store(CreateComponentRequest $createAssemblyRequest)
     {
         $imagePath = $createAssemblyRequest->file('image')->store('images/assemblies', 'public');
 
@@ -86,11 +86,11 @@ class AssemblyController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdateAssemblyRequest $updateAssemblyRequest
+     * @param UpdateComponentRequest $updateAssemblyRequest
      * @param Assembly $assembly
      * @return RedirectResponse
      */
-    public function update(UpdateAssemblyRequest $updateAssemblyRequest, Assembly $assembly)
+    public function update(UpdateComponentRequest $updateAssemblyRequest, Assembly $assembly)
     {
         $validatedInputs = $updateAssemblyRequest->validated();
 

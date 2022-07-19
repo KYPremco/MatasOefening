@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AssemblyController;
+use App\Http\Controllers\ComponentController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -37,6 +38,13 @@ Route::resource("assemblies", AssemblyController::class, [
 ]);
 Route::get("assemblies", [AssemblyController::class, "index"])->name("assemblies.index");
 Route::get("assemblies/{assembly}",  [AssemblyController::class, "show"])->middleware(["auth", "verified"])->name("assemblies.show");
+
+Route::resource("components", ComponentController::class, [
+    "except" => ["index", "show"],
+    "middleware" => ["auth.admin", "auth", "verified"],
+]);
+Route::get("components", [ComponentController::class, "index"])->name("components.index");
+Route::get("components/{assembly}",  [ComponentController::class, "show"])->middleware(["auth", "verified"])->name("components.show");
 
 
 

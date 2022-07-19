@@ -3,13 +3,14 @@
 namespace App\Http\Resources;
 
 use App\Models\Assembly;
+use App\Models\Component;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @mixin Assembly
+ * @mixin Component
  * */
-class AssemblyResource extends JsonResource
+class ComponentResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -22,11 +23,10 @@ class AssemblyResource extends JsonResource
         return [
             "id" => $this->id,
             "name" => $this->name,
+            "type" => $this->type,
             "price" => $this->price,
             "image" => asset('storage/' . $this->image),
-            "manufacturer" => $this->whenLoaded('manufacturer'),
-            "components" => $this->whenLoaded('components'),
-            ""
+            "assemblies" => AssemblyResource::collection($this->whenLoaded('assemblies')),
         ];
     }
 }
