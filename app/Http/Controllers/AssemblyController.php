@@ -7,6 +7,7 @@ use App\Http\Requests\Component\UpdateComponentRequest;
 use App\Http\Resources\AssemblyResource;
 use App\Models\Assembly;
 use App\Models\Manufacturer;
+use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -19,10 +20,15 @@ class AssemblyController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->get("search");
+
         return Inertia::render('Assembly/AssemblyIndex', [
-            "assemblies" => AssemblyResource::collection(Assembly::with('manufacturer')->get())
+            "search" => $search,
+            "assemblies" => AssemblyResource::collection(Assembly::with('manufacturer')
+                ->filterName($search)
+                ->get())
         ]);
     }
 

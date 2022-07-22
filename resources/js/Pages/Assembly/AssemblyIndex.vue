@@ -1,6 +1,7 @@
 <script setup>
 import NavLink from "../../Components/NavLink.vue";
 import {Inertia} from "@inertiajs/inertia";
+import SearchInput from "../../Components/SearchInput.vue";
 
 const props = defineProps({
     assemblies: Object,
@@ -32,9 +33,14 @@ const destroy = (id) => {
                         <table class="min-w-full divide-y divide-gray-300">
                             <thead class="bg-gray-50">
                             <tr>
-                                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Name</th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Title</th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Email</th>
+                                <th colspan="4" class="py-3.5 px-4 text-left text-sm font-semibold text-gray-900">
+                                    <search-input :route-name="route('assemblies.index')" />
+                                </th>
+                            </tr>
+                            <tr>
+                                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Naam</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Fabriek naam</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Prijs</th>
                                 <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 text-right text-sm font-semibold text-gray-900">
                                     <NavLink v-if="$page.props.auth.user?.is_admin" :href="route('assemblies.create')" classes="text-white bg-green-700 hover:bg-green-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                                         Nieuw
@@ -45,8 +51,8 @@ const destroy = (id) => {
                             <tbody class="bg-white">
                             <!-- Odd row -->
                             <tr v-for="assembly in $page.props.assemblies.data" :key="assembly.id">
-                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ assembly.manufacturer.name }}</td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ assembly.name }}</td>
+                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ assembly.name }}</td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ assembly.manufacturer.name }}</td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ assembly.price }}</td>
                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                                     <NavLink v-if="$page.props.auth.user" :href="route('assemblies.show', assembly.id)" classes="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 ml-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
