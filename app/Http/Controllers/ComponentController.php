@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Component\CreateComponentRequest;
 use App\Http\Requests\Component\UpdateComponentRequest;
-use App\Http\Resources\AssemblyResource;
 use App\Http\Resources\ComponentResource;
-use App\Models\Assembly;
 use App\Models\Component;
-use App\Models\Manufacturer;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -21,10 +19,13 @@ class ComponentController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->get("search");
+
         return Inertia::render('Component/ComponentIndex', [
-            "components" => ComponentResource::collection(Component::all())
+            "search" => $search,
+            "components" => ComponentResource::collection(Component::filterName($search)->get())
         ]);
     }
 

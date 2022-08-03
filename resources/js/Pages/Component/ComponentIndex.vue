@@ -1,6 +1,7 @@
 <script setup>
 import NavLink from "../../Components/NavLink.vue";
 import {Inertia} from "@inertiajs/inertia";
+import SearchInput from "../../Components/SearchInput.vue";
 
 const props = defineProps({
     components: Object,
@@ -31,6 +32,11 @@ const destroy = (id) => {
                     <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                         <table class="min-w-full divide-y divide-gray-300">
                             <thead class="bg-gray-50">
+                            <tr>
+                                <th colspan="4" class="py-3.5 px-4 text-left text-sm font-semibold text-gray-900">
+                                    <search-input :route-name="route('components.index')" />
+                                </th>
+                            </tr>
                             <tr>
                                 <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Naam</th>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Type</th>
