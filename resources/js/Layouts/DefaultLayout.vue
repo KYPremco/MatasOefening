@@ -75,8 +75,9 @@ import BreezeDropdown from '@/Components/Dropdown.vue';
 import BreezeDropdownLink from '@/Components/DropdownLink.vue';
 
 const navigation = [
-    { name: 'Assemblages', href: '/assemblies', current: true },
-    { name: 'Components', href: '/components', current: true },
+    { name: 'Zoeken', href: '/search' },
+    { name: 'Assemblages', href: '/assemblies' },
+    { name: 'Components', href: '/components' },
 ]
 </script>
 <style>

@@ -32,4 +32,10 @@ class Component extends Model
     {
         return $this->belongsToMany(Assembly::class, "assembly_components")->withPivot("location");
     }
+
+    public function scopeFilterName($query, $name)
+    {
+        $query->when($name)->where("name", "like", "%" . $name . "%");
+        return $query;
+    }
 }

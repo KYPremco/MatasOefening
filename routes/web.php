@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AssemblyController;
 use App\Http\Controllers\ComponentController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -47,6 +48,6 @@ Route::get("components", [ComponentController::class, "index"])->name("component
 Route::get("components/{assembly}",  [ComponentController::class, "show"])->middleware(["auth", "verified"])->name("components.show");
 
 
-
+Route::get("search", SearchController::class)->name("search");
 
 require __DIR__.'/auth.php';
