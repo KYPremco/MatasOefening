@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AssemblyController;
 use App\Http\Controllers\ComponentController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -47,6 +48,10 @@ Route::resource("components", ComponentController::class, [
 Route::get("components", [ComponentController::class, "index"])->name("components.index");
 Route::get("components/{assembly}",  [ComponentController::class, "show"])->middleware(["auth", "verified"])->name("components.show");
 
+Route::resource("orders", OrderController::class, [
+    "only" => ["index", "show"],
+    "middleware" => ["auth.admin", "auth", "verified"],
+]);
 
 Route::get("search", SearchController::class)->name("search");
 
