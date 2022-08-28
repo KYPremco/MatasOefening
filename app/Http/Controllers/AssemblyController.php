@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Assembly\CreateAssemblyRequest;
+use App\Http\Requests\Assembly\OrderAssemblyRequest;
 use App\Http\Requests\Assembly\UpdateAssemblyRequest;
 use App\Http\Requests\Component\CreateComponentRequest;
 use App\Http\Requests\Component\UpdateComponentRequest;
 use App\Http\Resources\AssemblyResource;
 use App\Models\Assembly;
 use App\Models\Manufacturer;
+use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -59,7 +62,7 @@ class AssemblyController extends Controller
         $assembly = Assembly::create([
             ...$createAssemblyRequest->validated(),
             'image' => $imagePath
-            ]);
+        ]);
 
         return redirect()->route('assemblies.show', $assembly);
     }
@@ -102,7 +105,7 @@ class AssemblyController extends Controller
     {
         $validatedInputs = $updateAssemblyRequest->validated();
 
-        if($validatedInputs["new_image"])
+        if ($validatedInputs["new_image"])
             $validatedInputs["image"] = $updateAssemblyRequest->file('new_image')->store('images/assemblies', 'public');
 
         $assembly->update($validatedInputs);
@@ -119,6 +122,19 @@ class AssemblyController extends Controller
     public function destroy(Assembly $assembly)
     {
         $assembly->delete();
+
+        return redirect()->route('assemblies.index')->with('message', 'Post Delete Successfully');
+    }
+
+    public function order(OrderAssemblyRequest $orderAssemblyRequest, Assembly $assembly)
+    {
+        $validatedInputs = $orderAssemblyRequest->validated();
+        $newOrder = $orderAssemblyRequest->user()->orders()->create([ "type" => "assembly" ]);
+        $newOrder->assemblies()->create([
+            ...$validatedInputs,
+            "assembly_id" => $assembly->id,
+            "price" => $assembly->price
+        ]);
 
         return redirect()->route('assemblies.index')->with('message', 'Post Delete Successfully');
     }

@@ -42,8 +42,11 @@
                                 </template>
 
                                 <template #content>
+                                    <BreezeDropdownLink :href="route('orders.index')" method="get" as="button">
+                                        Bestellingen
+                                    </BreezeDropdownLink>
                                     <BreezeDropdownLink :href="route('logout')" method="post" as="button">
-                                        Log Out
+                                        Uitloggen
                                     </BreezeDropdownLink>
                                 </template>
                             </BreezeDropdown>

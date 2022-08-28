@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer("amount");
             $table->foreignId("order_id")->references("id")->on("orders")->cascadeOnDelete();
             $table->float("price");
-            $table->foreignId("assembly_id")->references("id")->on("assemblies");
+            $table->foreignId("assembly_id")->nullable()->references("id")->on("assemblies")->nullOnDelete();
         });
     }
 

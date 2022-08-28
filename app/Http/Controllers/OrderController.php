@@ -21,8 +21,9 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
+        // AssemblyResource::collection(Assembly::with('manufacturer')
         return Inertia::render('Order/OrderIndex', [
-            "orders" => OrderResource::collection($request->user()->orders),
+            "orders" => OrderResource::collection(Order::with("assemblies", "assemblies.assembly:id,name")->where("user_id", $request->user()->id)->get()),
         ]);
     }
 

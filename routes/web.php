@@ -40,6 +40,7 @@ Route::resource("assemblies", AssemblyController::class, [
 ]);
 Route::get("assemblies", [AssemblyController::class, "index"])->name("assemblies.index");
 Route::get("assemblies/{assembly}",  [AssemblyController::class, "show"])->middleware(["auth", "verified"])->name("assemblies.show");
+Route::post("assemblies/{assembly}/order",  [AssemblyController::class, "order"])->name("assemblies.order");
 
 Route::resource("components", ComponentController::class, [
     "except" => ["index", "show"],

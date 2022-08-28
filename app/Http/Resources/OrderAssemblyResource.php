@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OrderResource extends JsonResource
+class OrderAssemblyResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,11 +15,14 @@ class OrderResource extends JsonResource
      */
     public function toArray($request)
     {
+
         return [
-            "id" => $this->id,
-            "products" => [
-                ...OrderAssemblyResource::collection($this->assemblies)
-            ],
+            'type' => 'assembly',
+            'order_id' => $this->order_id,
+            'name' => $this->assembly->name,
+            $this->whenLoaded('assembly', function () {
+                return "AA";
+            })
         ];
     }
 }
