@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string("api_token", 80)->unique()->nullable()->after("password");
         });
 
-        DB::statement("alter table `users` add `is_admin` bit default 0 not null after `api_token`;");
+        DB::statement("alter table users add is_admin bit default 0 not null;");
     }
 
     /**
