@@ -136,6 +136,6 @@ class AssemblyController extends Controller
             "price" => $assembly->price
         ]);
 
-        return redirect()->route('assemblies.index')->with('message', 'Post Delete Successfully');
+        return redirect()->route('assemblies.index')->with('message', 'Order aangemaakt');
     }
 }
