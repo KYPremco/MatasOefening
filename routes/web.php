@@ -47,7 +47,7 @@ Route::resource("components", ComponentController::class, [
     "middleware" => ["auth.admin", "auth", "verified"],
 ]);
 Route::get("components", [ComponentController::class, "index"])->name("components.index");
-Route::get("components/{assembly}",  [ComponentController::class, "show"])->middleware(["auth", "verified"])->name("components.show");
+ Route::get("components/{component}",  [ComponentController::class, "show"])->middleware(["auth", "verified"])->name("components.show");
 
 Route::resource("orders", OrderController::class, [
     "only" => ["index", "show"],
