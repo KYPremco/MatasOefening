@@ -32,4 +32,13 @@ class Order extends Model
     {
         return $this->hasMany(OrderAssembly::class);
     }
+
+    public function scopeFilterName($query, $name)
+    {
+        $query->when($name)
+            ->whereHas('assemblies.assembly', function ($query) use($name) {
+                $query->FilterNameOrComponentName($name);
+            });
+        return $query;
+    }
 }

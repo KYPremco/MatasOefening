@@ -24,7 +24,7 @@ class   CreateComponentRequest extends FormRequest
     public function rules()
     {
         return [
-            "name" => "required|max:255",
+            "name" => 'required|max:255',
             "type" => "required|max:50",
             "image" => "required|image|mimes:jpeg,jpg,png,svg|max:2048",
             "price" => "required|numeric|min:0|max:100000",

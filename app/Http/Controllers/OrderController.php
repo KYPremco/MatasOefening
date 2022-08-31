@@ -21,22 +21,29 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        // AssemblyResource::collection(Assembly::with('manufacturer')
+        $search = $request->get("search");
+
         return Inertia::render('Order/OrderIndex', [
-            "orders" => OrderResource::collection(Order::with("assemblies", "assemblies.assembly:id,name")->where("user_id", $request->user()->id)->get()),
+            "search" => $search,
+            "orders" => OrderResource::collection(Order::with("assemblies", "assemblies.assembly:id,name", "assemblies.assembly.components:id,name,price")
+                ->where("user_id", $request->user()->id)
+                ->filterName($search)
+                ->get()),
         ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      * @return Response
      */
     public function show(int $id)
     {
+        $component = Component::findOrFail($id);
+
         return Inertia::render('Component/ComponentShow', [
-            'component' => ComponentResource::make(Component::where("id", $id)->firstOrFail())
+            'component' => ComponentResource::make($component),
         ]);
     }
 }

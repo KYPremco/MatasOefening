@@ -20,9 +20,8 @@ class OrderAssemblyResource extends JsonResource
             'type' => 'assembly',
             'order_id' => $this->order_id,
             'name' => $this->assembly->name,
-            $this->whenLoaded('assembly', function () {
-                return "AA";
-            })
+            'price' => $this->price,
+            'components' => $this->assembly->components
         ];
     }
 }

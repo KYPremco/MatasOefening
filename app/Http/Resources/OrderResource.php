@@ -10,16 +10,15 @@ class OrderResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  Request  $request
+     * @param Request $request
      * @return array
      */
     public function toArray($request)
     {
         return [
             "id" => $this->id,
-            "products" => [
-                ...OrderAssemblyResource::collection($this->assemblies)
-            ],
+            "type" => $this->type,
+            "product" => $this->assemblies->first(),
         ];
     }
 }

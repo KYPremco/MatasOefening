@@ -8,6 +8,7 @@ use App\Http\Resources\ComponentResource;
 use App\Models\Component;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -52,9 +53,9 @@ class ComponentController extends Controller
         $component = Component::create([
             ...$createComponentRequest->validated(),
             'image' => $imagePath
-            ]);
+        ]);
 
-        return redirect()->route('components.show', $component);
+        return redirect()->route('components.show', ['component' => $component->id]);
     }
 
     /**

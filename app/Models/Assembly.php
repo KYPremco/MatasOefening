@@ -48,4 +48,15 @@ class Assembly extends Model
         $query->when($name)->where("name", "like", "%" . $name . "%");
         return $query;
     }
+
+    public function scopeFilterNameOrComponentName($query, $name)
+    {
+        $query
+            ->when($name)
+            ->where("name", "like", "%" . $name . "%")
+            ->orWhereHas('components', function ($query) use($name) {
+                $query->filterName($name);
+            });
+        return $query;
+    }
 }
