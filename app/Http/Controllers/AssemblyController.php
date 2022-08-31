@@ -9,6 +9,7 @@ use App\Http\Requests\Component\CreateComponentRequest;
 use App\Http\Requests\Component\UpdateComponentRequest;
 use App\Http\Resources\AssemblyResource;
 use App\Models\Assembly;
+use App\Models\Component;
 use App\Models\Manufacturer;
 use App\Models\Order;
 use App\Models\User;
@@ -46,6 +47,7 @@ class AssemblyController extends Controller
     {
         return Inertia::render('Assembly/AssemblyCreate', [
             "manufacturers" => Manufacturer::all(),
+            'components' => Component::all('id', 'name'),
         ]);
     }
 
@@ -59,10 +61,16 @@ class AssemblyController extends Controller
     {
         $imagePath = $createAssemblyRequest->file('image')->store('images/assemblies', 'public');
 
+        $validatedInputs = $createAssemblyRequest->validated();
+
         $assembly = Assembly::create([
-            ...$createAssemblyRequest->validated(),
-            'image' => $imagePath
+            ...$validatedInputs,
+            'image' => $imagePath,
         ]);
+
+        $attachComponents = $this->getAttachComponents($validatedInputs['components']);
+
+        $assembly->components()->attach($attachComponents);
 
         return redirect()->route('assemblies.show', $assembly);
     }
@@ -91,6 +99,7 @@ class AssemblyController extends Controller
         return Inertia::render('Assembly/AssemblyEdit', [
             "assembly" => AssemblyResource::make(Assembly::with(["manufacturer", "components"])->where("id", $id)->firstOrFail()),
             "manufacturers" => Manufacturer::all(),
+            'components' => Component::all()
         ]);
     }
 
@@ -103,12 +112,18 @@ class AssemblyController extends Controller
      */
     public function update(UpdateAssemblyRequest $updateAssemblyRequest, Assembly $assembly)
     {
+        // TODO: unique error when updating
         $validatedInputs = $updateAssemblyRequest->validated();
 
         if ($validatedInputs["new_image"])
             $validatedInputs["image"] = $updateAssemblyRequest->file('new_image')->store('images/assemblies', 'public');
 
         $assembly->update($validatedInputs);
+
+        $attachComponents = $this->getAttachComponents($validatedInputs['components']);
+
+        $assembly->components()->sync($attachComponents, false);
+
 
         return redirect()->route('assemblies.show', $assembly);
     }
@@ -137,5 +152,21 @@ class AssemblyController extends Controller
         ]);
 
         return redirect()->route('assemblies.index')->with('message', 'Order aangemaakt');
+    }
+
+    /**
+     * @param $inputComponents
+     * @return array
+     */
+    public function getAttachComponents($inputComponents): array
+    {
+        $components = Component::findMany(array_column($inputComponents, 'id'));
+
+        $attachComponents = [];
+        for ($i = 0; $i < count($components); $i++) {
+            $attachComponents[$i] = ['component_id' => $components[$i]->id, 'location' => $inputComponents[$i]['location']];
+        }
+
+        return $attachComponents;
     }
 }

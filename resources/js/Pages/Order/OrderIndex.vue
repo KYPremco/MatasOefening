@@ -179,7 +179,7 @@ function changeSorter(sortOn) {
                   </td>
                   <td class="whitespace-nowrap px-3 py-3 text-sm text-gray-500">{{ order.name || "Product niet gevonden" }}</td>
                   <td class="whitespace-nowrap px-3 py-3 text-sm text-gray-500">{{ order.type }}</td>
-                  <td class="whitespace-nowrap px-3 py-3 text-sm text-gray-500">{{ order.price }}</td>
+                  <td class="whitespace-nowrap px-3 py-3 text-sm text-gray-500 text-right">€ {{ parseInt(order.price).toFixed(2) }}</td>
                 </tr>
                 <tr v-for="component in order.product?.assembly?.components" :key="component.id" class="bg-gray-50">
                   <td class="whitespace-nowrap py-1 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
@@ -187,7 +187,7 @@ function changeSorter(sortOn) {
                   </td>
                   <td class="whitespace-nowrap px-3 py-1 text-sm text-gray-500">{{ component.name }}</td>
                   <td class="whitespace-nowrap px-3 py-1 text-sm text-gray-500">component</td>
-                  <td class="whitespace-nowrap px-3 py-1 text-sm text-gray-500">{{ order.price }}</td>
+                  <td class="whitespace-nowrap px-3 py-1 text-sm text-gray-500 text-right">€ {{ parseInt(component.price).toFixed(2) }}</td>
                 </tr>
               </template>
               </tbody>

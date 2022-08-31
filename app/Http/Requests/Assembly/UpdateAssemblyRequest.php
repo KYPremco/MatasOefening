@@ -28,7 +28,10 @@ class UpdateAssemblyRequest extends FormRequest
             "old_image" => "required|string|max:255",
             "new_image" => "nullable|image|mimes:jpeg,jpg,png,svg|max:2048",
             "price" => "required|numeric|min:0|max:100000",
-            "manufacturer_id" => "required|exists:manufacturers,id"
+            "manufacturer_id" => "required|exists:manufacturers,id",
+            "components" => "required|array|min:1",
+            "components.*.id" => "required|exists:components,id",
+            "components.*.location" => "required|distinct"
         ];
     }
 }
