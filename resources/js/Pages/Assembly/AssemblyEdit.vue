@@ -51,9 +51,6 @@ const changePreviewImage = (e) => {
 
 <template>
   <div class="flex flex-col items-center mt-3 md:mt-6">
-    <pre>
-      {{ props.assembly }}
-    </pre>
     <div class="w-full sm:max-w-4xl mt-6 px-6 py-4 bg-white shadow-md sm:rounded-lg">
       <BreezeValidationErrors class="mb-4"/>
       <form @submit.prevent="submit">
