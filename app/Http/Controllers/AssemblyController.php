@@ -136,7 +136,7 @@ class AssemblyController extends Controller
     {
         $assembly->delete();
 
-        return redirect()->route('assemblies.index')->with('message', 'Post Delete Successfully');
+        return redirect()->route('assemblies.index')->with('message', 'Assemblage succesvol verwijderd');
     }
 
     public function order(OrderAssemblyRequest $orderAssemblyRequest, Assembly $assembly)

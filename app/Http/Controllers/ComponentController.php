@@ -113,6 +113,6 @@ class ComponentController extends Controller
     {
         $component->delete();
 
-        return redirect()->route('components.index')->with('message', 'Post Delete Successfully');
+        return redirect()->route('components.index')->with('message', 'Component succesvol verwijderd');
     }
 }
