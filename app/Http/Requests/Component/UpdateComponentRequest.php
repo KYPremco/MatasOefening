@@ -26,7 +26,6 @@ class UpdateComponentRequest extends FormRequest
         return [
             "name" => "required|max:255",
             "type" => "required|max:50",
-            "old_image" => "required|string|max:255",
             "new_image" => "nullable|image|mimes:jpeg,jpg,png,svg|max:2048",
             "price" => "required|numeric|min:0|max:100000",
         ];
