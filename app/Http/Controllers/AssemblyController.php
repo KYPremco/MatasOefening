@@ -112,7 +112,6 @@ class AssemblyController extends Controller
      */
     public function update(UpdateAssemblyRequest $updateAssemblyRequest, Assembly $assembly)
     {
-        // TODO: unique error when updating
         $validatedInputs = $updateAssemblyRequest->validated();
 
         if ($validatedInputs["new_image"])
@@ -122,8 +121,7 @@ class AssemblyController extends Controller
 
         $attachComponents = $this->getAttachComponents($validatedInputs['components']);
 
-        $assembly->components()->sync($attachComponents, false);
-
+        $assembly->components()->sync($attachComponents);
 
         return redirect()->route('assemblies.show', $assembly);
     }
@@ -163,8 +161,9 @@ class AssemblyController extends Controller
         $components = Component::findMany(array_column($inputComponents, 'id'));
 
         $attachComponents = [];
+
         for ($i = 0; $i < count($components); $i++) {
-            $attachComponents[$i] = ['component_id' => $components[$i]->id, 'location' => $inputComponents[$i]['location']];
+            $attachComponents[$components[$i]->id] = ['location' => $inputComponents[$i]['location']];
         }
 
         return $attachComponents;
